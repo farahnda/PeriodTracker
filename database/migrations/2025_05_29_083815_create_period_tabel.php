@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('period_tabel', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->date('start_date');
+            $table->date('end_date');            
+            $table->text('notes')->nullabel();
             $table->timestamps();
         });
     }

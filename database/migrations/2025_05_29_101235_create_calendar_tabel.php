@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('article_tabel', function (Blueprint $table) {
+        Schema::create('calendar_tabel', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('content');
-            $table->string('image_url');
-            $table->date('author');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('title');  
+            $table->date('event_date');
+            $table->enum('type', ['menstruation', 'ovulation', 'fertile', 'custom']);            
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('article_tabel');
+        Schema::dropIfExists('calendar_tabel');
     }
 };
