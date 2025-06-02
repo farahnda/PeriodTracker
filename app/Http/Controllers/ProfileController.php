@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\User;
 use App\Models\Profile;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -36,11 +37,15 @@ class ProfileController extends Controller
 
         return redirect()->route('profiles.index')->with('success', 'Profile created successfully.');
     }
-    public function show($id): View
+    public function show($id)
     {
-        $profile = Profile::findOrFail($id);
-        return view('profiles.show', compact('profile'));
+    $profile = User::find($id); // atau model yang sesuai
+    if (!$profile) {
+        abort(404);
     }
+    return view('profiles.show', compact('profile'));
+    }
+
     public function edit(string $id): View
     {
         $profile = Profile::findOrFail($id);
@@ -63,7 +68,8 @@ class ProfileController extends Controller
             'birth_date' => $request->birth_date,
         ]);
 
-        return redirect()->route('profiles.index')->with('success', 'Profile updated successfully.');
+        return redirect()->route('profiles.show', $profile->id)
+                     ->with('success', 'Profile berhasil diupdate!');
     }
     public function destroy(string $id): RedirectResponse
     {

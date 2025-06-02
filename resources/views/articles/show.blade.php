@@ -1,5 +1,5 @@
 {{-- resources/views/articles/show.blade.php --}}
-@extends('layouts.app')
+@extends('layouts.nav')
 @section('title', 'Article')
 @section('content')
 <!DOCTYPE html>

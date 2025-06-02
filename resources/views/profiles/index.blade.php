@@ -1,5 +1,5 @@
 {{-- resources/views/profiles/index.blade.php --}}
-@extends('layouts.app')
+@extends('layouts.nav')
 @section('title', 'Profiles')
 @section('content')
 <!DOCTYPE html>

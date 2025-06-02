@@ -1,5 +1,5 @@
 {{-- resources/views/profile/edit.blade.php --}}
-@extends('layouts.app')
+@extends('layouts.nav')
 @section('title', 'Edit Profile')
 @section('content')
 <!DOCTYPE html>
@@ -63,7 +63,7 @@
                             @enderror
                         </div>
                             <div class="mt-4 d-flex justify-content-between">
-                                <a href="{{ route('profiles.index') }}" style="background: #f3bdbd; color: #fff; border-radius: 16px; padding: 10px 32px; text-decoration: none; font-weight: bold;">Back</a>
+                                <a href="/profiles/{{ Auth::id() }}" style="background: #f3bdbd; color: #fff; border-radius: 16px; padding: 10px 32px; text-decoration: none; font-weight: bold;">Back</a>
                                 <button type="submit" style="background: #f3bdbd; color: #fff; border-radius: 16px; padding: 10px 32px; border: none; font-weight: bold;">Update</button>
                             </div>
                     </form>

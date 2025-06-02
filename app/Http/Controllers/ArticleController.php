@@ -74,5 +74,5 @@ class ArticleController extends Controller
         $article->delete();
 
         return redirect()->route('articles.index')->with('success', 'Article deleted successfully.');
-    }
+}
 }

@@ -1,5 +1,5 @@
 {{-- resources/views/profile/create.blade.php --}}
-@extends('layouts.app')
+@extends('layouts.nav')
 @section('title', 'Profile')
 @section('content')
 <!DOCTYPE html>
@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card border-0 shadow-sm rounded">
-                <div class="card-body">
+                <div class="card-body" style="color: #3C5294; background-color: #EBDBD3; ">
                     <form action="{{ route('profiles.store') }}" method="POST">
                         @csrf
 

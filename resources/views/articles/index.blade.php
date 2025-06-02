@@ -1,5 +1,5 @@
 {{-- filepath: resources/views/article/index.blade.php --}}
-@extends('layouts.app')
+@extends('layouts.nav')
 @section('title', 'Article')
 @section('content')
 <section class="py-8">

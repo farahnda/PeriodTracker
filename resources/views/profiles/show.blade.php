@@ -1,5 +1,5 @@
 {{-- resources/views/profiles/show.blade.php --}}
-@extends('layouts.app')
+@extends('layouts.nav')
 @section('title', 'Profile')
 @section('content')
 
@@ -19,7 +19,7 @@
             <div class="card border-0 shadow-sm rounded">
                 <div class="card-body" style="color: #3C5294; background-color: #EBDBD3; ">
                     <h4 class="text-center">PROFILE</h4>
-                    <img class="size-12 rounded-full d-block mx-auto" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                    <img class="size-12 rounded-full d-block mx-auto" src="https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1114445501.jpg" alt="">
                     <p><strong>Username</strong> <br> {{ $profile->name }}</p>
                     <p><strong>Email</strong> <br> {{ $profile->email }}</p>
                     <p><strong>Tanggal Lahir</strong> <br> {{ $profile->birth_date }}</p>
