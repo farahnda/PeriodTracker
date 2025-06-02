@@ -31,7 +31,7 @@
             </div>
 
             {{-- Tombol “Baca lebih…” --}}
-            <a href="{{ route('articles.show', $article->id) }}"
+            <a href="{{ $article->link }}" target="_blank" rel="noopener"
                class="mt-6 inline-flex items-center h-9 rounded-full text-sm font-semibold px-3 bg-slate-100 text-slate-700
                       hover:bg-slate-200 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 transition">
               Baca lebih lanjut

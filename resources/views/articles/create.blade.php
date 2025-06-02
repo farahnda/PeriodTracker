@@ -54,6 +54,17 @@
                             <div class="alert alert-danger mt-2">{{ $message }}</div>
                             @enderror
                         </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold">Link (Opsional)</label>
+                            <input type="text"
+                                name="link"
+                                class="form-control @error('link') is-invalid @enderror"
+                                value="{{ old('link', $article->link ?? '') }}"
+                                placeholder="Masukkan URL/Link artikel">
+                            @error('link')
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
+                            @enderror
+                        </div>
 
                         <button type="submit" class="btn btn-md btn-primary">SIMPAN</button>
                         <a href="{{ route('articles.index') }}" class="btn btn-md btn-danger">KEMBALI</a>

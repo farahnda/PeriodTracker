@@ -23,6 +23,7 @@ class ArticleController extends Controller
             'content' => 'required|string',
             'image_url' => 'nullable|url',
             'author' => 'required|string|max:255',
+            'link' => 'nullable|url',
         ]);
 
         Article::create([
@@ -30,6 +31,7 @@ class ArticleController extends Controller
             'content' => $request->content,
             'image_url' => $request->image_url,
             'author' => $request->author,
+            'link' => $request->link,
         ]);
 
         return redirect()->route('articles.index')->with('success', 'Article created successfully.');
@@ -52,6 +54,7 @@ class ArticleController extends Controller
             'content' => 'required|string',
             'image_url' => 'nullable|url',
             'author' => 'required|string|max:255',
+            'link' => 'nullable|url',
         ]);
 
         $article = Article::findOrFail($id);
@@ -60,6 +63,7 @@ class ArticleController extends Controller
             'content' => $request->content,
             'image_url' => $request->image_url,
             'author' => $request->author,
+            'link' => $request->link,
         ]);
 
         return redirect()->route('articles.index')->with('success', 'Article updated successfully.');
