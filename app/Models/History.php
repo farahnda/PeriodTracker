@@ -3,17 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
-class History extends Model
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+class Calendar extends Model
 {
     use HasFactory;
-    protected $table = 'period_tabel';
+    protected $table ='period_tabel';
     protected $fillable = [
         'user_id',
         'start_date',
         'end_date',
-        'notes',
-        'created_at',
-        'updated_at',
+        'cyclelength',
+        'periodlength',
     ];
 }

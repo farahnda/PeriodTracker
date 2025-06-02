@@ -15,10 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->date('start_date');
-            $table->date('end_date');            
-            $table->text('notes')->nullabel();
+            $table->date('end_date');
+            $table->integer('cyclelength');
+            $table->integer('periodlength');
             $table->timestamps();
-        });
+});
+
     }
 
     /**
@@ -28,4 +30,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('period_tabel');
     }
-};
+};  
