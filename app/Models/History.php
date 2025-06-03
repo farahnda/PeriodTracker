@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-class Calendar extends Model
+class History extends Model
 {
     use HasFactory;
     protected $table ='period_tabel';

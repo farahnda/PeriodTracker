@@ -109,7 +109,7 @@
         @guest
         <div class="px-3">
           <a href="{{ route('login') }}" class="block mt-3 rounded-md px-3 py-2 text-base font-medium text-white hover:bg-purple-300">Login</a>
-          <a href="{{ route('register') }}" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-purple-300">Register</a>
+          <a href="{{ route('register') }}" class="block mt-3 rounded-md px-3 py-2 text-base font-medium text-white hover:bg-purple-300">Register</a>
         </div>
         @endguest
       </div>
