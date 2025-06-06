@@ -1,6 +1,6 @@
 {{-- resources/views/histories/index.blade.php --}}
 @extends('layouts.nav')
-@section('title', 'Histories')
+@section('title', 'Riwayat')
 @section('content')
 <!DOCTYPE html>
 <html lang="en">
@@ -30,13 +30,12 @@
                             </td>
                     </tr>  
                     @empty
-                    <tr> 
-                        <td colspan="4" class="text-center" style="color: #3C5294; background-color: #EBDBD3;">Belum ada history</td>
+                    <tr>
+                        {{-- #1F2937 --}}
+                        <td colspan="4" class="text-center" style="color: #1F2937; background-color: #EBDBD3;">Belum ada history</td>
                     </tr>
                     @endforelse
             </table>
-
-
             {{-- Jika pakai pagination, ganti di controller $histories = History::latest()->paginate(10); --}}
             {{-- {{ $histories->links('vendor.pagination.bootstrap-4') }} --}}
         </div>

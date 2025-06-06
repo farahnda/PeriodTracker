@@ -1,81 +1,95 @@
-{{-- resources/views/profile/edit.blade.php --}}
+{{-- resources/views/profiles/edit.blade.php --}}
 @extends('layouts.nav')
 @section('title', 'Edit Profile')
 @section('content')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Edit Profile</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-</head>
-<body style="background: lightgray">
-<div class="container mt-5 mb-5">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card-body" style="color: #3C5294; background-color: #EBDBD3; ">
 
-                <div class="card-body">
-                    <form action="{{ route('profiles.update', $profile->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
+<div class="flex flex-col items-center min-h-[90vh] pt-10">
+    <div class="w-full max-w-sm bg-pink-200 text-[#3C5294] p-6 rounded-4 shadow">
+        <h2 class="text-xl text-center font-bold mb-4">EDIT PROFILE</h2>
+        <form action="{{ route('profiles.update', $profile->id) }}" method="POST" class="space-y-4">
+            @csrf
+            @method('PUT')
 
-                        <div class="form-group">
-                            <label class="font-weight-bold">Nama</label>
-                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                                   value="{{ old('name', $profile->name) }}" placeholder="Masukkan Nama">
-                            @error('name')
-                            <div class="alert alert-danger mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label class="font-weight-bold">Email</label>
-                            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                                   value="{{ old('email', $profile->email) }}" placeholder="Masukkan Email">
-                            @error('email')
-                            <div class="alert alert-danger mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label class="font-weight-bold">Password <small>(Kosongkan jika tidak ingin mengubah)</small></label>
-                            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                                   placeholder="Masukkan Password Baru">
-                            @error('password')
-                            <div class="alert alert-danger mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label class="font-weight-bold">Konfirmasi Password</label>
-                            <input type="password" name="password_confirmation" class="form-control"
-                                   placeholder="Konfirmasi Password Baru">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="font-weight-bold">Tanggal Lahir (Opsional)</label>
-                            <input type="date" name="birth_date" class="form-control @error('birth_date') is-invalid @enderror"
-                                   value="{{ old('birth_date', $profile->birth_date) }}">
-                            @error('birth_date')
-                            <div class="alert alert-danger mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
-                            <div class="mt-4 d-flex justify-content-between">
-                                <a href="/profiles/{{ Auth::id() }}" style="background: #f3bdbd; color: #fff; border-radius: 16px; padding: 10px 32px; text-decoration: none; font-weight: bold;">Back</a>
-                                <button type="submit" style="background: #f3bdbd; color: #fff; border-radius: 16px; padding: 10px 32px; border: none; font-weight: bold;">Update</button>
-                            </div>
-                    </form>
-                </div>
+            <div>
+                <label class="font-semibold text-sm" for="name">Nama</label>
+                <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    class="mt-1 block w-full rounded border p-2 text-[#3C5294] @error('name') border-red-500 @enderror"
+                    value="{{ old('name', $profile->name) }}"
+                    placeholder="Masukkan Nama"
+                />
+                @error('name')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
-        </div>
+
+            <div>
+                <label class="font-semibold text-sm" for="email">Email</label>
+                <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    class="mt-1 block w-full rounded border p-2 text-[#3C5294] @error('email') border-red-500 @enderror"
+                    value="{{ old('email', $profile->email) }}"
+                    placeholder="Masukkan Email"
+                />
+                @error('email')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
+                <label class="font-semibold text-sm" for="password">Password <small>(Kosongkan jika tidak ingin mengubah)</small></label>
+                <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    class="mt-1 block w-full rounded border p-2 text-[#3C5294] @error('password') border-red-500 @enderror"
+                    placeholder="Masukkan Password Baru"
+                />
+                @error('password')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
+                <label class="font-semibold text-sm" for="password_confirmation">Konfirmasi Password</label>
+                <input
+                    id="password_confirmation"
+                    name="password_confirmation"
+                    type="password"
+                    class="mt-1 block w-full rounded border p-2 text-[#3C5294]"
+                    placeholder="Konfirmasi Password Baru"
+                />
+            </div>
+
+            <div>
+                <label class="font-semibold text-sm" for="birth_date">Tanggal Lahir (Opsional)</label>
+                <input
+                    id="birth_date"
+                    name="birth_date"
+                    type="date"
+                    class="mt-1 block w-full rounded border p-2 text-[#3C5294] @error('birth_date') border-red-500 @enderror"
+                    value="{{ old('birth_date', $profile->birth_date) }}"
+                />
+                @error('birth_date')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="mt-4 flex justify-between max-w-sm mx-auto w-full gap-2">
+                <a href="/profiles/{{ Auth::id() }}"
+                    class="flex-1 text-center bg-[#f3bdbd] text-white font-bold rounded-[16px] py-[10px] px-8 hover:bg-[#d89a9a] transition">
+                    Kembali
+                </a>
+                <button type="submit"
+                    class="flex-1 text-center bg-[#f3bdbd] text-white font-bold rounded-[16px] py-[10px] px-8 hover:bg-[#d89a9a] transition">
+                    Perbarui
+                </button>
+            </div>
+        </form>
     </div>
 </div>
-
-<!-- Optional JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
 @endsection

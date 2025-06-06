@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('image_url');
             $table->string('author');
             $table->text('link')->nullable();
+            $table->boolean('send_notification')->default(false);
             $table->timestamps();
         });
     }

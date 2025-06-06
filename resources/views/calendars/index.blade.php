@@ -1,71 +1,124 @@
-{{-- resources/views/calendars/index.blade.php --}}
 @extends('layouts.nav')
-@section('title', 'Kalender')
+@section('title', 'Hasil Prediksi')
 @section('content')
 
 <style>
-  .card {
-    background-color: transparent !important;
-    border: none !important;
+.card {
+  background-color: transparent !important;
+  border: none !important;
+}
+.card-body {
+  background-color: transparent !important;
   }
-  .card-body {
-    background-color: transparent !important;
-  }
+.card-prediksi {
+  background-color: #EBDBD3 !important;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.card-prediksi .card-body {
+  background-color: #EBDBD3 !important;
+  color: #3C5294;
+  padding: 1rem;
+}
 
-  #calendar {
+#calendar {
   max-width: 100%;
   margin: 0 auto;
 }
 
+.fc-daygrid-day {
+  cursor: pointer;
+}
+
+.fc-daygrid-day:hover {
+  background-color: #a0c4ff;
+}
+
 @media (max-width: 768px) {
   #calendar {
-    scale: 0.85;
+    scale: 1;
     transform-origin: top left;
   }
 }
 
 @media (max-width: 576px) {
-  #calendar {
-    scale: 0.75;
-    transform-origin: top left;
-  }
+   #calendar {
+      scale: 1;
+      transform-origin: top left;
+    }
 }
-
-  
 </style>
 
-<div class="container mt-4">
-  <!-- Baris 1: Kalender + Welcome -->
-  <div class="row">
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
     <!-- Kalender -->
-    <div class="col-md-6 mb-3">
+    <div class="col-md-6 mb-4 me-md-4">
       <div class="card h-100">
         <div class="card-body">
-            <div id="calendar" class="w-100"></div>
+          <div id="calendar" class="w-100"></div>
         </div>
       </div>
     </div>
 
-    <div class="col-md-6 mb-3 d-flex flex-column justify-content-center" >
-        <div class="border-0 rounded p-10" style="background-color: #EBDBD3;">
-            <div>
-            <h5>Prediksi</h5>
-            <ul>
-                <li>Periode berikutnya: {{ $nextPeriod ?? 'Belum tersedia' }}</li>
-                <li>Tanggal akhir periode: {{ $endDate ?? 'Belum tersedia' }}</li>
-                <li>Masa subur: {{ $fertileWindow ?? 'Belum tersedia' }}</li>
-                <!-- Tambahkan prediksi lainnya -->
-            </ul>
-            </div>
+    <!-- Hasil Prediksi -->
+    <div class="col-md-5">
+      <div class="card card-prediksi border-0 rounded-4 shadow overflow-hidden p-2">
+        <div class="card-body">
+          <h4 class="mb-4 fw-bold" style="font-size: 1.5rem;">Hasil Prediksi</h4>
+          <p class="d-flex">
+            <span class="fw-semibold" style="width: 50%;">Hari pertama menstruasi</span>
+            <span>: {{ $start_date ? $start_date->locale('id')->translatedFormat('l, d F Y') : 'Belum tersedia' }}</span>
+          </p>
+          <p class="d-flex">
+            <span class="fw-semibold" style="width: 50%;">Hari terakhir menstruasi</span>
+            <span>: {{ $end_date ? $end_date->locale('id')->translatedFormat('l, d F Y') : 'Belum tersedia' }}</span>
+          </p>
+          <p class="d-flex">
+            <span class="fw-semibold" style="width: 50%;">Lama siklus</span>
+            <span>: {{ $cyclelength ?? 'Belum tersedia' }}</span>
+          </p>
+          <p class="d-flex">
+            <span class="fw-semibold" style="width:50%;">Lama menstruasi</span>
+            <span>: {{ $periodlength ?? 'Belum tersedia' }}</span>
+          </p>
+
+          <br>
+          <hr>
+          <br>
+
+          <p class="d-flex">
+            <span class="fw-semibold" style="width: 50%;">Mulai menstruasi berikutnya</span>
+            <span>: {{ $next_start_date ? $next_start_date->locale('id')->translatedFormat('l, d F Y') : 'Belum tersedia' }}</span>
+          </p>
+          <p class="d-flex">
+            <span class="fw-semibold" style="width: 50%;">Akhir menstruasi berikutnya</span>
+            <span>: {{ $next_end_date ? $next_end_date->locale('id')->translatedFormat('l, d F Y') : 'Belum tersedia' }}</span>
+          </p>
+          <p class="d-flex">
+            <span class="fw-semibold" style="width: 50%;">Masa subur</span>
+            <span>:
+              @if ($fertile_start && $fertile_end)
+                {{ $fertile_start->locale('id')->translatedFormat('d F') }} - 
+                {{ $fertile_end->locale('id')->translatedFormat('d F Y') }}
+              @else
+                Belum tersedia
+              @endif
+            </span>
+          </p>      
+                
+          <div class="text-left mt-4">
+            <a href="{{ route('calendars.create') }}" 
+              class="btn btn-md text-white fw-bold px-4 py-2 rounded-[8px] border border-[#2c3d75] bg-[#1F2937] hover:bg-[#161F2B] hover:border-[#1f2a54] transition"
+              style="color: #fff; text-decoration: none; font-weight: bold; flex: 1; text-align: center;">
+              Prediksi Lagi
+            </a>
+          </div>
         </div>
+      </div>
     </div>
+</div>
 
-
-<!-- FullCalendar -->
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js"></script>
-<!-- FullCalendar CSS -->
 <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.css' rel='stylesheet' />
-<!-- FullCalendar JS -->
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.js'></script>
 
 <script>
@@ -74,6 +127,7 @@
     let calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: 'dayGridMonth',
       locale: 'id',
+      firstDay: 1,
       selectable: true,
       editable: true,
       events: '/events',

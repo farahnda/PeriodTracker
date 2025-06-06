@@ -14,35 +14,47 @@ class CalendarController extends Controller
     public function index(): View
     {
         $userId = Auth::id();
-
         $calendars = Calendar::where('user_id', $userId)->get();
 
-        // Data untuk FullCalendar
         $events = $calendars->map(function ($item) {
-    return [
-        'title' => 'Menstruasi',
-        'start' => $item->start_date,
-        'end' => Carbon::parse($item->end_date)->addDay()->toDateString(), // end exclusive
-        'color' => 'red',
-    ];
-});
-
+            return [
+                'title' => 'Menstruasi',
+                'start' => $item->start_date,
+                'end' => Carbon::parse($item->end_date)->addDay()->toDateString(),
+                'color' => 'red',
+            ];
+        });
 
         $last = $calendars->sortByDesc('start_date')->first();
 
-        $nextPeriod = $last
-            ? Carbon::parse($last->start_date)->addDays($last->cyclelength)->format('Y-m-d')
-            : null;
+        $start_date = $last ? Carbon::parse($last->start_date) : null;
+        $end_date = $last ? Carbon::parse($last->end_date) : null;
+        $cyclelength = $last ? $last->cyclelength : null;
+        $periodlength = $last ? $last->periodlength : null;
 
-        $fertileStart = $last
-            ? Carbon::parse($last->start_date)->addDays(14)->format('Y-m-d')
-            : null;
+        if ($last) {
+            $next_start_date = $start_date->copy()->addDays($cyclelength);
+            $next_end_date = $next_start_date->copy()->addDays($periodlength - 1);
+            $fertile_start = $next_start_date->copy()->subDays(14);
+            $fertile_end = $fertile_start->copy()->addDays(4);
+        } else {
+            $next_start_date = null;
+            $next_end_date = null;
+            $fertile_start = null;
+            $fertile_end = null;
+        }
 
         return view('calendars.index', [
             'calendars' => $calendars,
             'events' => $events,
-            'nextPeriod' => $nextPeriod,
-            'fertileWindow' => $fertileStart,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+            'cyclelength' => $cyclelength,
+            'periodlength' => $periodlength,
+            'next_start_date' => $next_start_date,
+            'next_end_date' => $next_end_date,
+            'fertile_start' => $fertile_start,
+            'fertile_end' => $fertile_end,
         ]);
     }
 
@@ -51,32 +63,64 @@ class CalendarController extends Controller
         return view('calendars.create');
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): RedirectResponse|View
     {
         $this->validate($request, [
-            'start_date' => 'required|date',
+            'start_date' => 'required|date_format:d-m-Y',
             // hapus validasi end_date karena dihitung otomatis
             'cyclelength' => 'required|integer|min:1',
             'periodlength' => 'required|integer|min:1',
             'notes' => 'nullable|string|max:1000',
         ]);
 
-        $userId = Auth::id();
+        $cycleLength = (int) $request->cyclelength;
+        $periodLength = (int) $request->periodlength;
 
         // Hitung end_date otomatis: start_date + periodlength - 1 hari
-        $startDate = Carbon::parse($request->start_date);
-        $endDate = $startDate->copy()->addDays($request->periodlength - 1)->format('Y-m-d');
+        $startDate = \Carbon\Carbon::createFromFormat('d-m-Y', $request->start_date);
+        // $startDate = Carbon::parse($request->start_date);
+        // $endDate = $startDate->copy()->addDays($request->periodlength - 1);
+        $endDate = $startDate->copy()->addDays($periodLength - 1);
 
-        Calendar::create([
-            'user_id' => $userId,
-            'start_date' => $request->start_date,
+        // Kalau user login, simpan ke database
+        if (Auth::check()) {
+            $userId = Auth::id();
+
+            // User login: simpan ke tabel `period_models`
+            Calendar::create([
+                'user_id' => $userId,
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+                'cyclelength' => $cycleLength,
+                'periodlength' => $periodLength,
+                'notes' => $request->notes,
+            ]);
+            
+            return redirect()->route('calendars.index')->with('success', 'Prediksi berhasil disimpan.');
+        }
+
+        // Hitung tanggal prediksi berikutnya
+        // $nextStartDate = $startDate->copy()->addDays($request->cyclelength);
+        // $nextEndDate = $nextStartDate->copy()->addDays($request->periodlength - 1);
+        $nextStartDate = $startDate->copy()->addDays($cycleLength);
+        $nextEndDate = $nextStartDate->copy()->addDays($periodLength - 1);
+
+        // Masa subur: biasanya 14 hari sebelum periode berikutnya
+        $fertileStart = $nextStartDate->copy()->subDays(14);
+        $fertileEnd = $fertileStart->copy()->addDays(4); // masa subur 5 hari
+
+        // Kalau guest, cuma tampilkan hasil prediksi langsung (tanpa simpan)
+        return view('guest.result', [
+            'start_date' => $startDate,
             'end_date' => $endDate,
             'cyclelength' => $request->cyclelength,
             'periodlength' => $request->periodlength,
-            'notes' => $request->notes,
+            'next_start_date' => $nextStartDate,
+            'next_end_date' => $nextEndDate,
+            'fertile_start' => $fertileStart,
+            'fertile_end' => $fertileEnd,
         ]);
 
-        return redirect()->route('calendars.index')->with('success', 'Data menstruasi berhasil disimpan.');
     }
 
     public function show($id): View

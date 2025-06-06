@@ -1,8 +1,8 @@
 @extends('layouts.nav')
-@section('title', 'Login')
+@section('title', 'Masuk Akun')
 @section('content')
 
-<div class="flex justify-center items-center min-h-screen">
+<div class="flex justify-center items-center  min-h-[90vh]">
     <div class="w-full max-w-sm bg-pink-200 text-[#3C5294] p-6 rounded-lg shadow-lg">
         @if (session('status'))
             <div class="mb-4 text-green-500 text-sm">
@@ -15,12 +15,6 @@
                 Email atau password salah, atau akun belum terdaftar.
             </div>
         @endif
-
-<form method="POST" action="{{ route('login') }}">
-    @csrf
-    <!-- input email, password, dll -->
-</form>
-
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
@@ -45,17 +39,21 @@
                 </label>
             </div>
 
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center text-sm mx-auto">
                 @if (Route::has('password.request'))
-                    <a class="text-sm underline hover:text-indigo-800" href="{{ route('password.request') }}">
-                        Forgot Password?
+                    <a class="underline hover:text-indigo-800" href="{{ route('password.request') }}">
+                        Lupa Password?
                     </a>
                 @endif
-
-                <button type="submit" class="bg-[#3C5294] text-white px-4 py-2 rounded hover:bg-blue-900">
-                    Log in
-                </button>
+                <a class="underline hover:text-indigo-800" href="{{ route('register') }}">
+                    Akun baru?
+                </a>
             </div>
+
+            <button type="submit" class="w-full bg-[#3C5294] text-white px-4 py-2 rounded hover:bg-blue-900 mt-4">
+                Masuk
+            </button>
+
         </form>
     </div>
 </div>

@@ -1,8 +1,8 @@
 @extends('layouts.nav')
-@section('title', 'Register')
+@section('title', 'Daftar Akun')
 @section('content')
 
-<div class="flex justify-center items-center min-h-screen">
+<div class="flex justify-center items-center min-h-[90vh]">
     <div class="w-full max-w-sm bg-pink-200 text-[#3C5294] p-6 rounded-lg shadow-lg">
         <form method="POST" action="{{ route('register') }}">
             @csrf
@@ -43,15 +43,35 @@
                 @enderror
             </div>
 
-            <div class="flex justify-between items-center">
+            <button type="submit" class="w-full bg-[#3C5294] text-white px-4 py-2 rounded hover:bg-blue-900 mt-1">
+                Daftar
+            </button>
+
+            <div class="flex flex-col justify-center items-center text-sm mx-auto mt-2">
+                <p class="mb-2 text-gray-600 italic">atau</p>
+                <a class="underline hover:text-indigo-800" href="{{ route('login') }}">
+                    Sudah punya akun?
+                </a>
+            </div>
+
+            {{-- <div class="flex justify-between items-center">
                 <a href="{{ route('login') }}" class="text-sm underline hover:text-indigo-800">
-                    Already registered?
+                    Sudah punya akun?
                 </a>
 
                 <button type="submit" class="bg-[#3C5294] text-white px-4 py-2 rounded hover:bg-blue-900">
-                    Register
+                    Daftar
                 </button>
+            </div> --}}
+            {{--  <div class="flex justify-center items-center text-sm w-64 mx-auto">
+                <a class="underline hover:text-indigo-800" href="{{ route('register') }}">
+                    Sudah punya akun?
+                </a>
             </div>
+
+            <button type="submit" class="w-full bg-[#3C5294] text-white px-4 py-2 rounded hover:bg-blue-900 mt-4">
+                Masuk
+            </button> --}}
         </form>
     </div>
 </div>
