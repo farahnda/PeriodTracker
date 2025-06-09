@@ -34,6 +34,11 @@
   background-color: #a0c4ff;
 }
 
+.menstruation-day{
+    background-color: #FFB6C1 !important; /* Pink */
+    color: white; /* Mengubah warna teks menjadi putih agar terlihat jelas */
+}
+
 @media (max-width: 992px) {
   .container.d-flex {
     flex-direction: column !important;
@@ -141,47 +146,7 @@
       firstDay: 1,
       selectable: true,
       editable: true,
-      events: '/events',
-      select: function (info) {
-        let title = prompt('Event Title:');
-        if (title) {
-          fetch('/events', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-            },
-            body: JSON.stringify({
-              title: title,
-              start: info.startStr,
-              end: info.endStr
-            })
-          }).then(() => calendar.refetchEvents());
-        }
-      },
-      eventDrop: function (info) {
-        fetch(`/events/${info.event.id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-          },
-          body: JSON.stringify({
-            start: info.event.start.toISOString(),
-            end: info.event.end ? info.event.end.toISOString() : null
-          })
-        });
-      },
-      eventClick: function (info) {
-        if (confirm('Hapus event ini?')) {
-          fetch(`/events/${info.event.id}`, {
-            method: 'DELETE',
-            headers: {
-              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-            }
-          }).then(() => calendar.refetchEvents());
-        }
-      }
+      events: @json($events), 
     });
     calendar.render();
   });

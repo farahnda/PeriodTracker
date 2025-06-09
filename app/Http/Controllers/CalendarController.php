@@ -16,14 +16,23 @@ class CalendarController extends Controller
         $userId = Auth::id();
         $calendars = Calendar::where('user_id', $userId)->get();
 
-        $events = $calendars->map(function ($item) {
-            return [
-                'title' => 'Menstruasi',
-                'start' => $item->start_date,
-                'end' => Carbon::parse($item->end_date)->addDay()->toDateString(),
-                'color' => 'red',
-            ];
+        $events = $calendars->flatMap(function ($item) {
+            $startDate = Carbon::parse($item->start_date);
+            $endDate = Carbon::parse($item->end_date);
+            $eventDays = [];
+
+            while ($startDate->lte($endDate)) {
+                $eventDays[] = [
+                    'start' => $startDate->toDateString(),
+                    'end' => $startDate->toDateString(), 
+                    'className' => 'menstruation-day', 
+                ];
+                $startDate->addDay(); 
+            }
+
+            return $eventDays;
         });
+
 
         $last = $calendars->sortByDesc('start_date')->first();
 
