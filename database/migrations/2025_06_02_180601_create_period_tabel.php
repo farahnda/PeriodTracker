@@ -14,10 +14,16 @@ return new class extends Migration
         Schema::create('period_tabel', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->date('start_date')->comment('Tanggal mulai menstruasi');
-            $table->date('end_date')->nullable()->comment('Tanggal selesai menstruasi');
-            $table->integer('cyclelength')->comment('Panjang siklus dalam hari');
-            $table->integer('periodlength')->comment('Lama menstruasi dalam hari');
+
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->integer('cyclelength');
+            $table->integer('periodlength');            
+            $table->date('next_start_date');
+            $table->date('next_end_date');
+            $table->date('fertile_start_date');
+            $table->date('fertile_end_date');
+
             $table->timestamps();
         });
     }

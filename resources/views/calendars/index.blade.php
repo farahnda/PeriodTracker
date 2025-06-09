@@ -34,18 +34,44 @@
   background-color: #a0c4ff;
 }
 
-@media (max-width: 768px) {
-  #calendar {
-    scale: 1;
-    transform-origin: top left;
+.menstruation-day{
+    background-color: #a94064 !important; 
+    color: white; 
+}
+
+.next-day{
+    background-color:#c093a3 !important; 
+    color: white; 
+}
+
+.fertile-day{
+    background-color:#365393 !important; 
+    color: white; 
+}
+
+@media (max-width: 992px) {
+  .container.d-flex {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    min-height: unset !important;
+  }
+  .col-md-6, .col-md-5 {
+    max-width: 100%;
+    flex: 0 0 100%;
+    margin-right: 0 !important;
+    margin-bottom: 1.5rem !important;
   }
 }
 
 @media (max-width: 576px) {
-   #calendar {
-      scale: 1;
-      transform-origin: top left;
-    }
+  .card-prediksi .card-body {
+    padding: 0.75rem;
+    font-size: 0.95rem;
+  }
+  #calendar {
+    min-width: 280px;
+    font-size: 0.85rem;
+  }
 }
 </style>
 
@@ -96,9 +122,9 @@
           <p class="d-flex">
             <span class="fw-semibold" style="width: 50%;">Masa subur</span>
             <span>:
-              @if ($fertile_start && $fertile_end)
-                {{ $fertile_start->locale('id')->translatedFormat('d F') }} - 
-                {{ $fertile_end->locale('id')->translatedFormat('d F Y') }}
+              @if ($fertile_start_date && $fertile_end_date)
+                {{ $fertile_start_date->locale('id')->translatedFormat('d F') }} - 
+                {{ $fertile_end_date->locale('id')->translatedFormat('d F Y') }}
               @else
                 Belum tersedia
               @endif
@@ -130,47 +156,7 @@
       firstDay: 1,
       selectable: true,
       editable: true,
-      events: '/events',
-      select: function (info) {
-        let title = prompt('Event Title:');
-        if (title) {
-          fetch('/events', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-            },
-            body: JSON.stringify({
-              title: title,
-              start: info.startStr,
-              end: info.endStr
-            })
-          }).then(() => calendar.refetchEvents());
-        }
-      },
-      eventDrop: function (info) {
-        fetch(`/events/${info.event.id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-          },
-          body: JSON.stringify({
-            start: info.event.start.toISOString(),
-            end: info.event.end ? info.event.end.toISOString() : null
-          })
-        });
-      },
-      eventClick: function (info) {
-        if (confirm('Hapus event ini?')) {
-          fetch(`/events/${info.event.id}`, {
-            method: 'DELETE',
-            headers: {
-              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-            }
-          }).then(() => calendar.refetchEvents());
-        }
-      }
+      events: @json($events), 
     });
     calendar.render();
   });

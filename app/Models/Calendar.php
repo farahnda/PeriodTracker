@@ -17,5 +17,9 @@ class Calendar extends Model
         'end_date',
         'cyclelength',
         'periodlength',
+        'next_start_date',
+        'next_end_date',
+        'fertile_start_date',
+        'fertile_end_date',
     ];
 }
