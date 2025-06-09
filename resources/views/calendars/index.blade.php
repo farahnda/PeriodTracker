@@ -34,18 +34,29 @@
   background-color: #a0c4ff;
 }
 
-@media (max-width: 768px) {
-  #calendar {
-    scale: 1;
-    transform-origin: top left;
+@media (max-width: 992px) {
+  .container.d-flex {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    min-height: unset !important;
+  }
+  .col-md-6, .col-md-5 {
+    max-width: 100%;
+    flex: 0 0 100%;
+    margin-right: 0 !important;
+    margin-bottom: 1.5rem !important;
   }
 }
 
 @media (max-width: 576px) {
-   #calendar {
-      scale: 1;
-      transform-origin: top left;
-    }
+  .card-prediksi .card-body {
+    padding: 0.75rem;
+    font-size: 0.95rem;
+  }
+  #calendar {
+    min-width: 280px;
+    font-size: 0.85rem;
+  }
 }
 </style>
 
