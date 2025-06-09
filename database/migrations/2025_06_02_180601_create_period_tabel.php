@@ -17,7 +17,11 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->integer('cyclelength');
-            $table->integer('periodlength');
+            $table->integer('periodlength');            
+            $table->date('next_start_date');
+            $table->date('next_end_date');
+            $table->date('fertile_start_date');
+            $table->date('fertile_end_date');
             $table->timestamps();
 });
 

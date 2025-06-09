@@ -35,8 +35,18 @@
 }
 
 .menstruation-day{
-    background-color: #FFB6C1 !important; /* Pink */
-    color: white; /* Mengubah warna teks menjadi putih agar terlihat jelas */
+    background-color: #a94064 !important; 
+    color: white; 
+}
+
+.next-day{
+    background-color:#c093a3 !important; 
+    color: white; 
+}
+
+.fertile-day{
+    background-color:#365393 !important; 
+    color: white; 
 }
 
 @media (max-width: 992px) {
@@ -112,9 +122,9 @@
           <p class="d-flex">
             <span class="fw-semibold" style="width: 50%;">Masa subur</span>
             <span>:
-              @if ($fertile_start && $fertile_end)
-                {{ $fertile_start->locale('id')->translatedFormat('d F') }} - 
-                {{ $fertile_end->locale('id')->translatedFormat('d F Y') }}
+              @if ($fertile_start_date && $fertile_end_date)
+                {{ $fertile_start_date->locale('id')->translatedFormat('d F') }} - 
+                {{ $fertile_end_date->locale('id')->translatedFormat('d F Y') }}
               @else
                 Belum tersedia
               @endif

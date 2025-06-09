@@ -4,46 +4,74 @@
 
 <style>
 .card {
-    background-color: transparent !important;
-    border: none !important;
+  background-color: transparent !important;
+  border: none !important;
 }
 .card-body {
-    background-color: transparent !important;
-}
+  background-color: transparent !important;
+  }
 .card-prediksi {
-    background-color: #EBDBD3 !important;
-    border-radius: 1rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}   
+  background-color: #EBDBD3 !important;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
 .card-prediksi .card-body {
-    background-color: #EBDBD3 !important;
-    color: #3C5294;
-    padding: 1rem;
+  background-color: #EBDBD3 !important;
+  color: #3C5294;
+  padding: 1rem;
 }
 
 #calendar {
-    max-width: 100%;
-    margin: 0 auto;
-}
-.fc-daygrid-day {
-    cursor: pointer;
-}
-.fc-daygrid-day:hover {
-    background-color: #a0c4ff;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
-@media (max-width: 768px) {
-    #calendar {
-        scale: 1;
-        transform-origin: top left;
-    }
+.fc-daygrid-day {
+  cursor: pointer;
+}
+
+.fc-daygrid-day:hover {
+  background-color: #a0c4ff;
+}
+
+.menstruation-day{
+    background-color: #a94064 !important; 
+    color: white; 
+}
+
+.next-day{
+    background-color:#c093a3 !important; 
+    color: white; 
+}
+
+.fertile-day{
+    background-color:#365393 !important; 
+    color: white; 
+}
+
+@media (max-width: 992px) {
+  .container.d-flex {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    min-height: unset !important;
+  }
+  .col-md-6, .col-md-5 {
+    max-width: 100%;
+    flex: 0 0 100%;
+    margin-right: 0 !important;
+    margin-bottom: 1.5rem !important;
+  }
 }
 
 @media (max-width: 576px) {
-    #calendar {
-        scale: 1;
-        transform-origin: top left;
-    }
+  .card-prediksi .card-body {
+    padding: 0.75rem;
+    font-size: 0.95rem;
+  }
+  #calendar {
+    min-width: 280px;
+    font-size: 0.85rem;
+  }
 }
 </style>
 
@@ -94,7 +122,7 @@
                     </p>
                     <p class="d-flex">
                         <span class="fw-semibold" style="width: 50%;">Masa subur</span>
-                        <span>: {{ $fertile_start->locale('id')->translatedFormat('d F') }} - {{ $fertile_end->locale('id')->translatedFormat('d F Y') }}</span>
+                        <span>: {{ $fertile_start_date->locale('id')->translatedFormat('d F') }} - {{ $fertile_end_date->locale('id')->translatedFormat('d F Y') }}</span>
                     </p>
 
                     <div class="text-left mt-4">
@@ -116,14 +144,17 @@
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.js'></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            locale: 'id',
-            firstDay: 1
-        });
-        calendar.render();
+  document.addEventListener('DOMContentLoaded', function () {
+    let calendarEl = document.getElementById('calendar');
+    let calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      locale: 'id',
+      firstDay: 1,
+      selectable: true,
+      editable: true,
+      events: @json($events), 
     });
+    calendar.render();
+  });
 </script>
 @endsection
