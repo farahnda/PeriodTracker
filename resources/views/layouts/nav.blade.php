@@ -44,13 +44,17 @@
           <div class="ml-4 flex items-center md:ml-6">
             @auth
               <!-- Notifikasi -->
-              <button type="button" class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-grey-300 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+              <a href="{{ route('notifications.index') }}" class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-grey-300 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                 <span class="sr-only">Lihat Notifikasi</span>
                 <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"/>
                 </svg>
-              </button>
+                <span id="notif-badge" class="absolute -top-1 -right-1 text-[10px] font-bold text-white bg-red-600 rounded-full w-4 h-4 flex items-center justify-center">
+  {{ $unreadCount }}
+</span>
 
+              </a>
+              
               <!-- Dropdown profil -->
               <div class="relative ml-3">
                 <div>
@@ -90,9 +94,9 @@
     <div class="md:hidden hidden" id="mobile-menu">
       <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
         <a href="/" class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-purple-300">Home</a>
-        <a href="/calendars" class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-purple-300">Calendar</a>
-        <a href="/histories" class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-purple-300">History</a>
-        <a href="/articles" class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-purple-300">Article</a>
+        <a href="/calendars" class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-purple-300">Kalender</a>
+        <a href="/histories" class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-purple-300">Riwayat</a>
+        <a href="/articles" class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-purple-300">Artikel</a>
       </div>
       <div class="border-t border-gray-300 pt-4 pb-3">
         @auth
@@ -104,18 +108,29 @@
           </div>
         </div>
         <div class="mt-3 space-y-1 px-2">
-          <a href="/profiles/{{ Auth::id() }}" class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-purple-300">Your Profile</a>
+          <a href="{{ route('notifications.index') }}" class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-purple-300">
+  <div class="flex items-center gap-2">
+    <span>Notifikasi</span>
+    @if ($unreadCount > 0)
+      <span class="text-[10px] font-bold text-white bg-red-600 rounded-full w-4 h-4 flex items-center justify-center">
+        {{ $unreadCount }}
+      </span>
+    @endif
+  </div>
+</a>
+
+          <a href="/profiles/{{ Auth::id() }}" class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-purple-300">Profil Kamu</a>
           <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit" class="w-full text-left block px-3 py-2 text-base font-medium text-white hover:bg-purple-300">Sign out</button>
+            <button type="submit" class="w-full text-left block px-3 py-2 text-base font-medium text-white hover:bg-purple-300">Keluar</button>
           </form>
         </div>
         @endauth
 
         @guest
         <div class="px-3">
-          <a href="{{ route('login') }}" class="block mt-3 rounded-md px-3 py-2 text-base font-medium text-white hover:bg-purple-300">Login</a>
-          <a href="{{ route('register') }}" class="block mt-3 rounded-md px-3 py-2 text-base font-medium text-white hover:bg-purple-300">Register</a>
+          <a href="{{ route('login') }}" class="block mt-3 rounded-md px-3 py-2 text-base font-medium text-white hover:bg-purple-300">Masuk</a>
+          <a href="{{ route('register') }}" class="block mt-3 rounded-md px-3 py-2 text-base font-medium text-white hover:bg-purple-300">Daftar</a>
         </div>
         @endguest
       </div>

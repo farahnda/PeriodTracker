@@ -24,7 +24,7 @@
         <div class="mb-3">
             <p class="font-semibold text-sm">Tanggal Lahir</p>
             <p class="text-sm">
-                {{ $profile->birth_date ? $profile->birth_date : 'Belum tersedia' }}
+                {{ $profile->birth_date ? $profile->birth_date : '-' }}
             </p>
         </div>
     </div>

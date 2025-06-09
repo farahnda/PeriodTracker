@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Notifications\NewSignup;
 
 class RegisteredUserController extends Controller
 {
@@ -39,9 +40,14 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'email_verified_at' => now(),
         ]);
 
         event(new Registered($user));
+
+        $user->notify(new NewSignup($user->name, $user->email));
+        $admin = User::find(1);
+        $admin?->notify(new NewSignup($user->name, $user->email));
 
        return redirect()->route('login')->with('status', 'Registrasi berhasil, silakan login.');
     }

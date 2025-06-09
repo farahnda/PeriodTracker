@@ -1,6 +1,6 @@
 {{-- resources/views/article/edit.blade.php --}}
 @extends('layouts.nav')
-@section('title', 'Article')
+@section('title', 'Artikel')
 @section('content')
 <!DOCTYPE html>
 <html lang="en">
