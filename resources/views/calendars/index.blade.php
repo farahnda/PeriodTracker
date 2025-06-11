@@ -9,7 +9,7 @@
 }
 .card-body {
   background-color: transparent !important;
-  }
+}
 .card-prediksi {
   background-color: #EBDBD3 !important;
   border-radius: 1rem;
@@ -87,6 +87,7 @@
 
     <!-- Hasil Prediksi -->
     <div class="col-md-5">
+      @forelse($calendars as $calendar)
       <div class="card card-prediksi border-0 rounded-4 shadow overflow-hidden p-2">
         <div class="card-body">
           <h4 class="mb-4 fw-bold" style="font-size: 1.5rem;">Hasil Prediksi</h4>
@@ -131,15 +132,49 @@
             </span>
           </p>      
                 
-          <div class="text-left mt-4">
+          <div class="mt-4 text-center">
             <a href="{{ route('calendars.create') }}" 
               class="btn btn-md text-white fw-bold px-4 py-2 rounded-[8px] border border-[#2c3d75] bg-[#1F2937] hover:bg-[#161F2B] hover:border-[#1f2a54] transition"
-              style="color: #fff; text-decoration: none; font-weight: bold; flex: 1; text-align: center;">
+              style="color: #fff; text-decoration: none; font-weight: bold; display: inline-block; min-width: 150px;">
               Prediksi Lagi
+            </a>
+          </div>
+
+          <div class="mt-3 d-flex justify-content-center gap-2">
+            <a href="{{ route('calendars.edit', $calendar->id) }}" 
+              class="btn btn-md text-white fw-bold px-4 py-2 rounded-[8px] border border-warning bg-warning text-dark hover:bg-warning-subtle transition"
+              style="text-decoration: none; min-width: 120px;">
+              Edit Prediksi
+            </a>
+
+            <form action="{{ route('calendars.destroy', $calendar->id) }}" method="POST" 
+                  onsubmit="return confirm('Yakin ingin menghapus prediksi ini?')" 
+                  style="display:inline;">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn btn-md btn-danger text-white fw-bold px-4 py-2 rounded-[8px]" style="min-width: 120px;">
+                Hapus Prediksi
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+      @empty
+      <div class="card card-prediksi border-0 rounded-4 shadow overflow-hidden p-2">
+        <div class="card-body">
+          <h4 class="mb-4 fw-bold" style="font-size: 1.5rem;">Hasil Prediksi</h4>
+          <p class="text-muted text-center">Belum ada prediksi yang tersedia.</p>
+          <div class="text-center mt-4">
+            <a href="{{ route('calendars.create') }}" 
+              class="btn btn-md text-white fw-bold px-4 py-2 rounded-[8px] border border-[#2c3d75] bg-[#1F2937] hover:bg-[#161F2B] hover:border-[#1f2a54] transition"
+              style="color: #fff; text-decoration: none; font-weight: bold;">
+              Mulai Prediksi
             </a>
           </div>
         </div>
       </div>
+      @endforelse
     </div>
 </div>
 
