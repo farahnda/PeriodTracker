@@ -6,15 +6,18 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+// use Pest\ArchPresets\Strict;
+// use Str;
 
-class PeriodNotification extends Notification
+class NewSignup extends Notification 
+// implements ShouldQueue
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(public string $name, public string $email)
     {
         //
     }
@@ -26,7 +29,7 @@ class PeriodNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -35,9 +38,10 @@ class PeriodNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+            ->subject("Selamat Datang di Period Tracker!")
+            ->line("Akun dengan email {$this->email} telah berhasil didaftarkan.")
+            ->action('Masuk Sekarang', url('/login'))
+            ->line("Terima kasih {$this->name} sudah menggunakan website kami!");
     }
 
     /**
@@ -49,6 +53,15 @@ class PeriodNotification extends Notification
     {
         return [
             //
+        ];
+    }
+
+    public function toDatabase($notifiable): array
+    {
+        return [
+            'title' => 'Pengguna Baru Terdaftar',
+            'body' => "{$this->name} ({$this->email}) telah mendaftar.",
+            'url' => url('/users'), // arahkan ke daftar user, opsional
         ];
     }
 }

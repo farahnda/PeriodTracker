@@ -58,15 +58,17 @@
                         </div>
                         
                         <br>
-                        
-                        <button type="submit" class="btn btn-md text-white fw-bold px-4 py-2 bg-[#3C5294] border-[#2c3d75] hover:bg-[#2c3d75] hover:border-[#1f2a54]">
-                            Update
-                        </button>
 
-                        <a href="{{ route('calendars.index') }}" 
-                        class="btn btn-md text-white fw-bold px-4 py-2 bg-[#800000] border-[#660000] hover:bg-[#660000] hover:border-[#4d0000]">
-                            Batal
-                        </a>
+                        <div class="d-flex gap-2">
+                            <a href="{{ route('calendars.index') }}" 
+                            class="btn btn-md text-white fw-bold px-4 py-2 flex-fill text-center bg-[#800000] border-[#660000] hover:bg-[#660000] hover:border-[#4d0000]">
+                                Batal
+                            </a>
+                            <button type="submit" 
+                                class="btn btn-md text-white fw-bold px-4 py-2 flex-fill bg-[#3C5294] border-[#2c3d75] hover:bg-[#2c3d75] hover:border-[#1f2a54]">
+                                Perbarui
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>

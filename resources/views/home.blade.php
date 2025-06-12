@@ -11,17 +11,33 @@
 }
 
 #calendar {
-max-width: 100%;
-margin: 0 auto;
+  max-width: 100%;
+  margin: 0 auto;
+  background-color: #EBDBD3;
+  color: #3C5294;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
 }
-/* Warna background default tanggal */
+
 .fc-daygrid-day {
-  cursor: pointer; /* biar keliatan bisa dihover */
+  cursor: pointer;
+  border: 1px solid #aaa !important;
 }
-/* Saat hover, ubah background jadi warna lain */
 .fc-daygrid-day:hover {
-  background-color: #a0c4ff; /* contoh warna biru muda */
-} 
+  background-color: #a0c4ff;
+}
+
+.fc-col-header-cell {
+  border: 1px solid #aaa;
+  font-weight: bold;
+}
+.fc .fc-col-header-cell {
+  border: 1px solid #aaa;
+}
+.fc-scrollgrid {
+  border: 1px solid #aaa !important;
+}
 
 @media (max-width: 768px) {
   #calendar {

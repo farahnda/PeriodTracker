@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('period_tabel', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
             $table->date('start_date');
             $table->date('end_date');
             $table->integer('cyclelength');
@@ -22,9 +23,9 @@ return new class extends Migration
             $table->date('next_end_date');
             $table->date('fertile_start_date');
             $table->date('fertile_end_date');
-            $table->timestamps();
-});
 
+            $table->timestamps();
+        });
     }
 
     /**
@@ -34,4 +35,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('period_tabel');
     }
-};  
+};

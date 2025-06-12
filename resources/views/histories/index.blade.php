@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h3 class="text-center my-4" style="color: #3C5294;">History</h3>
+    <h3 class="text-center my-4" style="color: #3C5294;">Riwayat</h3>
     <hr>
     <div class="card border-0 shadow-sm rounded">
         <div class="card-body" style="color: #3C5294; background-color: #EBDBD3;">
@@ -21,11 +21,11 @@
                     @forelse ($histories as $history)
                     <tr>
                         <td style="color: #3C5294; background-color: #EBDBD3;">
-                            <strong>{{ $history->cyclelength }} days</strong><br>
+                            <strong>{{ $history->cyclelength }} hari</strong><br>
                                 <small>
-                                    {{ \Carbon\Carbon::parse($history->start_date)->format('d F Y') }} - 
-                                    {{ \Carbon\Carbon::parse($history->end_date)->format('d F Y') }} 
-                                    ({{ $history->periodlength }} days)
+                                    {{ \Carbon\Carbon::parse($history->start_date)->locale('id')->translatedFormat('d F Y') }} - 
+                                    {{ \Carbon\Carbon::parse($history->end_date)->locale('id')->translatedFormat('d F Y') }} 
+                                    ({{ $history->periodlength }} hari)
                                 </small>
                             </td>
                     </tr>  
@@ -36,8 +36,6 @@
                     </tr>
                     @endforelse
             </table>
-            {{-- Jika pakai pagination, ganti di controller $histories = History::latest()->paginate(10); --}}
-            {{-- {{ $histories->links('vendor.pagination.bootstrap-4') }} --}}
         </div>
     </div>
 </div>

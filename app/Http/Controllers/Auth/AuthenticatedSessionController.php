@@ -8,6 +8,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Notifications\LoginActivityNotification;
+
 
 class AuthenticatedSessionController extends Controller
 {
@@ -23,14 +25,25 @@ class AuthenticatedSessionController extends Controller
      * Handle an incoming authentication request.
      */
     public function store(LoginRequest $request): RedirectResponse
-    {
+{
     $request->authenticate();
 
+    // Ambil user yang sedang login
+    $user = Auth::user();
+
+    // Kirim notifikasi login berhasil
+    $user->notify(new LoginActivityNotification($user->name, $user->email));
+
+    // Regenerasi session untuk keamanan
     $request->session()->regenerate();
 
-    // Langsung redirect ke '/' (home)
-    return redirect()->intended('/');
-    }
+    // Redirect berdasarkan role
+   if ($user->hasRole('admin')) {
+    return redirect()->route('admin.dashboard');
+}
+
+return redirect()->route('/');
+}
 
 
     /**

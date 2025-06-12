@@ -4,7 +4,7 @@
 @section('content')
 
 <div class="flex flex-col items-center min-h-[90vh] pt-10">
-    <div class="w-full max-w-sm bg-pink-200 text-[#3C5294] p-6 rounded-4 shadow">
+    <div class="w-full max-w-sm bg-[#EBDBD3] text-[#3C5294] p-6 rounded-4 shadow">
         <h2 class="text-xl text-center font-bold mb-4">PROFIL AKUN</h2>
 
         <div class="flex justify-center mb-4">
@@ -24,7 +24,7 @@
         <div class="mb-3">
             <p class="font-semibold text-sm">Tanggal Lahir</p>
             <p class="text-sm">
-                {{ $profile->birth_date ? $profile->birth_date : 'Belum tersedia' }}
+                {{ $profile->birth_date ? $profile->birth_date : '-' }}
             </p>
         </div>
     </div>
@@ -32,11 +32,11 @@
     {{-- Tombol di luar card --}}
     <div class="mt-4 flex justify-between max-w-sm mx-auto w-full">
         <a href="/"
-            class="text-center bg-[#f3bdbd] text-white font-bold rounded-[16px] py-[10px] px-8 hover:bg-[#d89a9a] transition">
+            class="text-center bg-[#d89a9a] hover:bg-[#c57f7f] text-white font-bold rounded-[16px] py-[10px] px-8 transition">
             Kembali
         </a>
         <a href="{{ route('profiles.edit', $profile->id) }}"
-            class="text-center bg-[#f3bdbd] text-white font-bold rounded-[16px] py-[10px] px-8 hover:bg-[#d89a9a] transition">
+            class="text-center bg-[#d89a9a] hover:bg-[#c57f7f] text-white font-bold rounded-[16px] py-[10px] px-8 transition">
             Sunting
         </a>
     </div>

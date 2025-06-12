@@ -3,17 +3,16 @@
 @section('content')
 
 <style>
-.card {
+.card,
+.card-body {
   background-color: transparent !important;
   border: none !important;
 }
-.card-body {
-  background-color: transparent !important;
-  }
+
 .card-prediksi {
   background-color: #EBDBD3 !important;
   border-radius: 1rem;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .card-prediksi .card-body {
   background-color: #EBDBD3 !important;
@@ -24,29 +23,46 @@
 #calendar {
   max-width: 100%;
   margin: 0 auto;
+  background-color: #EBDBD3;
+  color: #3C5294;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
 }
 
 .fc-daygrid-day {
   cursor: pointer;
+  border: 1px solid #aaa !important;
 }
-
 .fc-daygrid-day:hover {
   background-color: #a0c4ff;
 }
 
-.menstruation-day{
-    background-color: #a94064 !important; 
-    color: white; 
+.fc-col-header-cell {
+  border: 1px solid #aaa;
+  font-weight: bold;
+}
+.fc .fc-col-header-cell {
+  border: 1px solid #aaa;
+}
+.fc-scrollgrid {
+  border: 1px solid #aaa !important;
 }
 
-.next-day{
-    background-color:#c093a3 !important; 
-    color: white; 
+.menstruation-day {
+  background-color: #a94064 !important;
+  color: white;
+  border: none;
 }
-
-.fertile-day{
-    background-color:#365393 !important; 
-    color: white; 
+.next-day {
+  background-color: #c093a3 !important;
+  color: white;
+  border: none;
+}
+.fertile-day {
+  background-color: #365393 !important;
+  color: white;
+  border: none;
 }
 
 @media (max-width: 992px) {
@@ -55,7 +71,8 @@
     align-items: stretch !important;
     min-height: unset !important;
   }
-  .col-md-6, .col-md-5 {
+  .col-md-6,
+  .col-md-5 {
     max-width: 100%;
     flex: 0 0 100%;
     margin-right: 0 !important;

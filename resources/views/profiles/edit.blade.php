@@ -4,7 +4,7 @@
 @section('content')
 
 <div class="flex flex-col items-center min-h-[90vh] pt-10">
-    <div class="w-full max-w-sm bg-pink-200 text-[#3C5294] p-6 rounded-4 shadow">
+    <div class="w-full max-w-sm bg-[#EBDBD3] text-[#3C5294] p-6 rounded-4 shadow">
         <h2 class="text-xl text-center font-bold mb-4">EDIT PROFILE</h2>
         <form action="{{ route('profiles.update', $profile->id) }}" method="POST" class="space-y-4">
             @csrf
@@ -81,11 +81,11 @@
 
             <div class="mt-4 flex justify-between max-w-sm mx-auto w-full gap-2">
                 <a href="/profiles/{{ Auth::id() }}"
-                    class="flex-1 text-center bg-[#f3bdbd] text-white font-bold rounded-[16px] py-[10px] px-8 hover:bg-[#d89a9a] transition">
+                    class="flex-1 text-center bg-[#d89a9a] hover:bg-[#c57f7f] text-white font-bold rounded-[16px] py-[10px] px-8 transition">
                     Kembali
                 </a>
                 <button type="submit"
-                    class="flex-1 text-center bg-[#f3bdbd] text-white font-bold rounded-[16px] py-[10px] px-8 hover:bg-[#d89a9a] transition">
+                    class="flex-1 text-center bg-[#d89a9a] hover:bg-[#c57f7f] text-white font-bold rounded-[16px] py-[10px] px-8 transition">
                     Perbarui
                 </button>
             </div>

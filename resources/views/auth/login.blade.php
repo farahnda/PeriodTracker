@@ -31,13 +31,13 @@
                 <input id="password" class="mt-1 block w-full rounded border border-gray-300 p-2" type="password" name="password" required />
             </div>
 
-            <!-- Remember Me -->
+            {{-- <!-- Remember Me -->
             <div class="mb-4">
                 <label class="inline-flex items-center">
                     <input type="checkbox" name="remember" class="rounded border-gray-300 text-indigo-600" />
                     <span class="ml-2 text-sm">Remember me</span>
                 </label>
-            </div>
+            </div> --}}
 
             <div class="flex justify-between items-center text-sm mx-auto">
                 @if (Route::has('password.request'))

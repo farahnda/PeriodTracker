@@ -25,6 +25,7 @@ class CalendarController extends Controller
                 $eventDays[] = [
                     'start' => $startDate->toDateString(),
                     'end' => $startDate->toDateString(), 
+                    'title' => 'Menstruasi',
                     'className' => 'menstruation-day', 
                 ];
                 $startDate->addDay(); 
@@ -38,6 +39,7 @@ class CalendarController extends Controller
                     $eventDays[] = [
                         'start' => $nextStartDate->toDateString(),
                         'end' => $nextStartDate->toDateString(),
+                        'title' => 'Next Menstruation',
                         'className' => 'next-day', 
                     ];
                     $nextStartDate->addDay(); 
@@ -52,6 +54,7 @@ class CalendarController extends Controller
                     $eventDays[] = [
                         'start' => $fertileStartDate->toDateString(),
                         'end' => $fertileStartDate->toDateString(),
+                        'title' => 'Masa Subur',
                         'className' => 'fertile-day',
                     ];
                     $fertileStartDate->addDay();
@@ -92,6 +95,7 @@ class CalendarController extends Controller
             'next_end_date' => $next_end_date,
             'fertile_start_date' => $fertile_start_date,
             'fertile_end_date' => $fertile_end_date,
+            'last' => $last,
         ]);
     }
 
@@ -146,6 +150,7 @@ class CalendarController extends Controller
             $events[] = [
                 'start' => $current->toDateString(),
                 'end' => $current->toDateString(),
+                'title' => 'Menstruasi',
                 'className' => 'menstruation-day',
             ];
             $current->addDay();
@@ -156,6 +161,7 @@ class CalendarController extends Controller
             $events[] = [
                 'start' => $current->toDateString(),
                 'end' => $current->toDateString(),
+                'title' => 'Next Menstruation',
                 'className' => 'next-day',
             ];
             $current->addDay();
@@ -166,6 +172,7 @@ class CalendarController extends Controller
             $events[] = [
                 'start' => $current->toDateString(),
                 'end' => $current->toDateString(),
+                'title' => 'Masa Subur',
                 'className' => 'fertile-day',
             ];
             $current->addDay();
@@ -199,18 +206,17 @@ class CalendarController extends Controller
     public function update(Request $request, string $id): RedirectResponse
     {
         $this->validate($request, [
-            'start_date' => 'required|date',
-            // hapus validasi end_date
+            'start_date' => 'required|date_format:d-m-Y',
+            // 'end_date' => 'required|date_format:d-m-Y|after_or_equal:start_date',
             'cyclelength' => 'required|integer|min:1',
             'periodlength' => 'required|integer|min:1',
-            'notes' => 'nullable|string|max:1000',
         ]);
 
         $calendar = Calendar::findOrFail($id);
 
         $userId = Auth::id();
 
-        $startDate = Carbon::parse($request->start_date);
+        $startDate = Carbon::createFromFormat('d-m-Y', $request->start_date);
         $periodLength = (int) $request->periodlength;
         $cycleLength = (int) $request->cyclelength;
 
@@ -222,21 +228,20 @@ class CalendarController extends Controller
 
         $calendar->update([
             'user_id' => $userId,
-            'start_date' => $request->start_date,
+            'start_date' => $startDate,
             'end_date' => $endDate,
             'cyclelength' => $request->cyclelength,
             'periodlength' => $request->periodlength,
             'next_start_date' => $nextStartDate,
             'next_end_date' => $nextEndDate,
             'fertile_start_date' => $fertileStartDate,
-            'fertile_end_date' => $fertileEndDate,            
-            'notes' => $request->notes,
+            'fertile_end_date' => $fertileEndDate,   
         ]);
 
         return redirect()->route('calendars.index')->with('success', 'Data menstruasi berhasil diperbarui.');
     }
 
-    public function destroy(string $id): RedirectResponse
+    public function destroy(Request $request, string $id): RedirectResponse
     {
         $calendar = Calendar::findOrFail($id);
         $calendar->delete();

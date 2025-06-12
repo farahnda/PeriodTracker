@@ -3,17 +3,16 @@
 @section('content')
 
 <style>
-.card {
+.card,
+.card-body {
   background-color: transparent !important;
   border: none !important;
 }
-.card-body {
-  background-color: transparent !important;
-}
+
 .card-prediksi {
   background-color: #EBDBD3 !important;
   border-radius: 1rem;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .card-prediksi .card-body {
   background-color: #EBDBD3 !important;
@@ -24,29 +23,46 @@
 #calendar {
   max-width: 100%;
   margin: 0 auto;
+  background-color: #EBDBD3;
+  color: #3C5294;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
 }
 
 .fc-daygrid-day {
   cursor: pointer;
+  border: 1px solid #aaa !important;
 }
-
 .fc-daygrid-day:hover {
   background-color: #a0c4ff;
 }
 
-.menstruation-day{
-    background-color: #a94064 !important; 
-    color: white; 
+.fc-col-header-cell {
+  border: 1px solid #aaa;
+  font-weight: bold;
+}
+.fc .fc-col-header-cell {
+  border: 1px solid #aaa;
+}
+.fc-scrollgrid {
+  border: 1px solid #aaa !important;
 }
 
-.next-day{
-    background-color:#c093a3 !important; 
-    color: white; 
+.menstruation-day {
+  background-color: #a94064 !important;
+  color: white;
+  border: none;
 }
-
-.fertile-day{
-    background-color:#365393 !important; 
-    color: white; 
+.next-day {
+  background-color: #c093a3 !important;
+  color: white;
+  border: none;
+}
+.fertile-day {
+  background-color: #365393 !important;
+  color: white;
+  border: none;
 }
 
 @media (max-width: 992px) {
@@ -55,7 +71,8 @@
     align-items: stretch !important;
     min-height: unset !important;
   }
-  .col-md-6, .col-md-5 {
+  .col-md-6,
+  .col-md-5 {
     max-width: 100%;
     flex: 0 0 100%;
     margin-right: 0 !important;
@@ -142,7 +159,7 @@
 
           <div class="mt-3 d-flex justify-content-center gap-2">
             <a href="{{ route('calendars.edit', $calendar->id) }}" 
-              class="btn btn-md text-white fw-bold px-4 py-2 rounded-[8px] border border-warning bg-warning text-dark hover:bg-warning-subtle transition"
+              class="btn btn-md text-white fw-bold px-4 py-2 bg-[#d89a9a] hover:bg-[#c57f7f] transition"
               style="text-decoration: none; min-width: 120px;">
               Edit Prediksi
             </a>
@@ -152,7 +169,7 @@
                   style="display:inline;">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-md btn-danger text-white fw-bold px-4 py-2 rounded-[8px]" style="min-width: 120px;">
+              <button type="submit" class="btn btn-md text-white fw-bold px-4 py-2 bg-[#800000] border-[#660000] hover:bg-[#660000] hover:border-[#4d0000]"">
                 Hapus Prediksi
               </button>
             </form>
